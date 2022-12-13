@@ -25,6 +25,11 @@ class BreweryClientTest {
     }
 
     @Test
+    void deleteBeerById() {
+        client.deleteBeerById(UUID.randomUUID());
+    }
+
+    @Test
     void createNewBeer() {
         BeerDto dto = BeerDto.builder().build();
         URI location = client.createNewBeer(dto);
