@@ -1,6 +1,7 @@
 package com.velialiyev.microservicesbreweryclient.web.client;
 
 import com.velialiyev.microservicesbreweryclient.web.model.BeerDto;
+import com.velialiyev.microservicesbreweryclient.web.model.CustomerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class BreweryClient {
 
     private final String BEER_PATH_V1 = "/api/v1/beer";
+    private final String CUSTOMER_PATH_V1 = "/api/v1/customer";
     private final RestTemplate restTemplate;
 
     private String apihost;
@@ -36,5 +38,21 @@ public class BreweryClient {
     }
     public void setApihost(String apihost) {
         this.apihost = apihost;
+    }
+
+    public CustomerDto getCustomerById(UUID uuid){
+        return restTemplate.getForObject(apihost + CUSTOMER_PATH_V1 + "/" + uuid, CustomerDto.class);
+    }
+
+    public URI createNewCustomer(CustomerDto customerDto){
+        return restTemplate.postForLocation(apihost + CUSTOMER_PATH_V1, customerDto);
+    }
+
+    public void updateCustomer(UUID uuid, CustomerDto customerDto){
+        restTemplate.put(apihost + CUSTOMER_PATH_V1 + "/" + uuid, customerDto);
+    }
+
+    public void deleteCustomer(UUID uuid){
+        restTemplate.delete(apihost + CUSTOMER_PATH_V1 + "/" + uuid);
     }
 }

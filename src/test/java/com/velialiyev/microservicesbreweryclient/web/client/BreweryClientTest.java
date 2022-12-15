@@ -1,6 +1,7 @@
 package com.velialiyev.microservicesbreweryclient.web.client;
 
 import com.velialiyev.microservicesbreweryclient.web.model.BeerDto;
+import com.velialiyev.microservicesbreweryclient.web.model.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,5 +37,23 @@ class BreweryClientTest {
 
         assertNotNull(location);
 
+    }
+
+    @Test
+    void getCustomerById() {
+        CustomerDto found = client.getCustomerById(UUID.randomUUID());
+        assertNotNull(found);
+    }
+
+    @Test
+    void createNewCustomer() {
+        CustomerDto customerDto = CustomerDto.builder().id(UUID.randomUUID()).name("Veli").build();
+        URI uri = client.createNewCustomer(customerDto);
+        assertNotNull(uri);
+    }
+
+    @Test
+    void deleteCustomer() {
+        client.deleteCustomer(UUID.randomUUID());
     }
 }
